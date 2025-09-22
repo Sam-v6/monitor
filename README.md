@@ -9,9 +9,9 @@ Clone this repository on your Docker host, cd into dockprom directory and run co
 
 ```bash
 git clone https://github.com/stefanprodan/dockprom
-cd dockprom
+cd monitor
 
-ADMIN_USER='admin' ADMIN_PASSWORD='admin' ADMIN_PASSWORD_HASH='$2a$14$1l.IozJx7xQRVmlkEQ32OeEEfP5mRxTpbDTCTcXRqn19gXD8YK1pO' docker-compose up -d
+ADMIN_USER='admin' ADMIN_PASSWORD='admin' ADMIN_PASSWORD_HASH='$2a$14$1l.IozJx7xQRVmlkEQ32OeEEfP5mRxTpbDTCTcXRqn19gXD8YK1pO' docker compose up -d
 ```
 
 **Caddy v2 does not accept plaintext passwords. It MUST be provided as a hash value. The above password hash corresponds to ADMIN_PASSWORD 'admin'. To know how to generate hash password, refer [Updating Caddy to v2](#Updating-Caddy-to-v2)**
@@ -35,6 +35,7 @@ Containers:
 * NodeExporter (host metrics collector)
 * cAdvisor (containers metrics collector)
 * Caddy (reverse proxy and basic auth provider for prometheus and alertmanager)
+* DCGM exporter (grabs nvidia GPU metrics and feeds it to prometheus)
 
 ## Setup Grafana
 
@@ -68,34 +69,21 @@ Grafana is preconfigured with dashboards and Prometheus as the default data sour
 * Url: [http://prometheus:9090](http://prometheus:9090)
 * Access: proxy
 
-***Docker Host Dashboard***
+***Host Dashboard***
 
 ![Host](https://raw.githubusercontent.com/stefanprodan/dockprom/master/screens/Grafana_Docker_Host.png)
 
-The Docker Host Dashboard shows key metrics for monitoring the resource usage of your server:
+The Host Dashboard shows key metrics for monitoring the resource usage of your server:
 
 * Server uptime, CPU idle percent, number of CPU cores, available memory, swap and storage
 * System load average graph, running and blocked by IO processes graph, interrupts graph
-* CPU usage graph by mode (guest, idle, iowait, irq, nice, softirq, steal, system, user)
+* CPU usage graph by mode (guest, idle, iowait, irq, nice, softirq, steal, system, user) and CPU Temperatures
+* GPU usage, temperatures, power consumption, and memory used
 * Memory usage graph by distribution (used, free, buffers, cached)
 * IO usage graph (read Bps, read Bps and IO time)
 * Network usage graph by device (inbound Bps, Outbound Bps)
 * Swap usage and activity graphs
 
-For storage and particularly Free Storage graph, you have to specify the fstype in grafana graph request.
-You can find it in `grafana/provisioning/dashboards/docker_host.json`, at line 480 :
-
-```yaml
-"expr": "sum(node_filesystem_free_bytes{fstype=\"btrfs\"})",
-```
-
-I work on BTRFS, so i need to change `aufs` to `btrfs`.
-
-You can find right value for your system in Prometheus `http://<host-ip>:9090` launching this request :
-
-```yaml
-node_filesystem_free_bytes
-```
 
 ***Docker Containers Dashboard***
 
@@ -173,9 +161,9 @@ Trigger an alert if any of the monitoring targets (node-exporter and cAdvisor) a
       description: "Service {{ $labels.instance }} is down."
 ```
 
-***Docker Host alerts***
+***Host alerts***
 
-Trigger an alert if the Docker host CPU is under high load for more than 30 seconds:
+Trigger an alert if the host CPU is under high load for more than 30 seconds:
 
 ```yaml
 - alert: high_cpu_load
