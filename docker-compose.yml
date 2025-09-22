@@ -46,7 +46,7 @@ services:
       org.label-schema.group: "monitoring"
 
   nodeexporter:
-    image: prom/node-exporter:v1.9.1
+    image: prom/node-exporter:latest
     container_name: nodeexporter
     volumes:
       - /proc:/host/proc:ro
@@ -96,6 +96,7 @@ services:
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
       - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_USERS_DEFAULT_THEME=tron
     restart: unless-stopped
     expose:
       - 3000
@@ -133,5 +134,19 @@ services:
     restart: unless-stopped
     networks:
       - monitor-net
+    labels:
+      org.label-schema.group: "monitoring"
+
+  dcgm-exporter:
+    image: nvcr.io/nvidia/k8s/dcgm-exporter:latest
+    container_name: dcgm-exporter
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    restart: unless-stopped
+    networks:
+      - monitor-net
+    ports:
+      - "9400:9400"   # metrics endpoint
     labels:
       org.label-schema.group: "monitoring"
