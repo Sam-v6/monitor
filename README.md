@@ -85,6 +85,11 @@ The Host Dashboard shows key metrics for monitoring the resource usage of your s
 * Swap usage and activity graphs
 
 
+Please note the CPU package temperature measurement depends on your CPU:
+For a machine with an intel CPU: `avg by(instance) (node_hwmon_temp_celsius{chip="pci0000:00_0000:00:18_3", sensor="temp1"})`
+
+For a machine with an AMD threadripper: `avg by(instance) (node_hwmon_temp_celsius{chip="pci0000:00_0000:00:18_3", sensor="temp1"})`
+
 ***Docker Containers Dashboard***
 
 ![Containers](https://raw.githubusercontent.com/stefanprodan/dockprom/master/screens/Grafana_Docker_Containers.png)
