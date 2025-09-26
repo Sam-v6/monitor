@@ -19,7 +19,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 5,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -963,10 +963,12 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "builder",
           "expr": "sum(rate(node_cpu_seconds_total[1m])) by (mode) * 100 / scalar(count(node_cpu_seconds_total{mode=\"user\"}))",
           "intervalFactor": 10,
           "legendFormat": "{{ mode }}",
           "metric": "node_cpu_seconds_total",
+          "range": true,
           "refId": "A",
           "step": 10
         }
@@ -1044,22 +1046,15 @@
       "id": 16,
       "options": {
         "legend": {
-          "calcs": [
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
+          "calcs": [],
+          "displayMode": "list",
           "placement": "right",
-          "showLegend": true
+          "showLegend": false
         },
-        "timezone": [
-          "browser"
-        ],
         "tooltip": {
           "hideZeros": false,
-          "mode": "multi",
-          "sort": "desc"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pluginVersion": "12.0.2",
@@ -1102,6 +1097,7 @@
             "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
+            "axisGridShow": true,
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1185,6 +1181,7 @@
           "editorMode": "builder",
           "exemplar": false,
           "expr": "DCGM_FI_DEV_GPU_UTIL{job=\"nvidia-gpu\"}",
+          "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -1194,7 +1191,7 @@
           "useBackend": false
         }
       ],
-      "title": "GPU Uitlization",
+      "title": "GPU Utilization",
       "type": "timeseries"
     },
     {
@@ -1476,32 +1473,7 @@
           },
           "unit": "celsius"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "GPU 0 (NVIDIA GeForce RTX 4090)"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 9,
@@ -1701,9 +1673,6 @@
           "placement": "right",
           "showLegend": true
         },
-        "timezone": [
-          "browser"
-        ],
         "tooltip": {
           "hideZeros": false,
           "mode": "multi",
@@ -1787,7 +1756,7 @@
               "viz": false
             },
             "insertNulls": false,
-            "lineInterpolation": "smooth",
+            "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
@@ -1829,22 +1798,15 @@
       "id": 14,
       "options": {
         "legend": {
-          "calcs": [
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "right",
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
           "showLegend": true
         },
-        "timezone": [
-          "browser"
-        ],
         "tooltip": {
           "hideZeros": false,
-          "mode": "multi",
-          "sort": "desc"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pluginVersion": "12.0.2",
@@ -1953,22 +1915,15 @@
       "id": 15,
       "options": {
         "legend": {
-          "calcs": [
-            "min",
-            "max",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "right",
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
           "showLegend": true
         },
-        "timezone": [
-          "browser"
-        ],
         "tooltip": {
           "hideZeros": false,
-          "mode": "multi",
-          "sort": "desc"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pluginVersion": "12.0.2",
@@ -2089,9 +2044,9 @@
       "options": {
         "legend": {
           "calcs": [
-            "mean",
+            "min",
             "max",
-            "min"
+            "mean"
           ],
           "displayMode": "table",
           "placement": "right",
@@ -2221,9 +2176,9 @@
       "options": {
         "legend": {
           "calcs": [
-            "mean",
+            "min",
             "max",
-            "min"
+            "mean"
           ],
           "displayMode": "table",
           "placement": "right",
@@ -2232,7 +2187,7 @@
         "tooltip": {
           "hideZeros": false,
           "mode": "multi",
-          "sort": "none"
+          "sort": "desc"
         }
       },
       "pluginVersion": "12.0.2",
@@ -2289,12 +2244,12 @@
     "list": []
   },
   "time": {
-    "from": "now-1h",
-    "to": "now"
+    "from": "2025-09-25T20:49:17.347Z",
+    "to": "2025-09-25T21:36:26.269Z"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Host",
   "uid": "1a3bfc16-36e7-42fc-8ea8-3f1b102dba00",
-  "version": 3
+  "version": 14
 }
