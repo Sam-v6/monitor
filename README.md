@@ -41,7 +41,7 @@ The Host Dashboard shows key metrics for monitoring the resource usage of your s
 * Server uptime, CPU idle percent, number of CPU cores, available memory, swap and storage
 * System load average graph, running and blocked by IO processes graph, interrupts graph
 * CPU usage graph by mode (guest, idle, iowait, irq, nice, softirq, steal, system, user) and CPU Temperatures
-  * Please note the CPU package temperature measurement depends on your CPU, for a machine with an intel CPU the `promql` query is: `avg by(instance) (node_hwmon_temp_celsius{chip="pci0000:00_0000:00:18_3", sensor="temp1"})`
+  * Please note the CPU package temperature measurement depends on your CPU, for a machine with an intel CPU the `promql` query is: `avg( node_hwmon_temp_celsius{instance="nodeexporter:9100", chip=~"platform_coretemp_.*"} )`
   * For a machine with an AMD threadripper: `avg by(instance) (node_hwmon_temp_celsius{chip="pci0000:00_0000:00:18_3", sensor="temp1"})`
 * GPU usage, temperatures, power consumption, and memory used
 * Memory usage graph by distribution (used, free, buffers, cached)
