@@ -2244,8 +2244,8 @@
     "list": []
   },
   "time": {
-    "from": "2025-09-25T20:49:17.347Z",
-    "to": "2025-09-25T21:36:26.269Z"
+    "from": "now-1h",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
