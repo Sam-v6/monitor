@@ -1071,12 +1071,115 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "id": 25,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "rate(node_rapl_package_joules_total[1m])",
+          "legendFormat": "Package",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "editorMode": "code",
+          "expr": "rate(node_rapl_core_joules_total[1m])",
+          "legendFormat": "Cores",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "CPU Power",
+      "type": "timeseries"
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 35
       },
       "id": 21,
       "panels": [],
@@ -1151,7 +1254,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 36
       },
       "id": 18,
       "options": {
@@ -1261,7 +1364,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 45
       },
       "id": 20,
       "options": {
@@ -1370,7 +1473,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 45
+        "y": 54
       },
       "id": 19,
       "options": {
@@ -1479,7 +1582,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 54
+        "y": 63
       },
       "id": 17,
       "options": {
@@ -1527,7 +1630,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 63
+        "y": 72
       },
       "id": 23,
       "panels": [],
@@ -1659,7 +1762,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 64
+        "y": 73
       },
       "id": 6,
       "options": {
@@ -1793,7 +1896,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 73
+        "y": 82
       },
       "id": 14,
       "options": {
@@ -1910,7 +2013,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 80
+        "y": 89
       },
       "id": 15,
       "options": {
@@ -1966,7 +2069,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 87
+        "y": 96
       },
       "id": 24,
       "panels": [],
@@ -2038,7 +2141,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 88
+        "y": 97
       },
       "id": 8,
       "options": {
@@ -2170,7 +2273,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 95
+        "y": 104
       },
       "id": 7,
       "options": {
