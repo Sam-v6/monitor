@@ -38,13 +38,6 @@ scrape_configs:
     static_configs:
       - targets: ['dcgm-exporter:9400']
 
-alerting:
-  alertmanagers:
-  - scheme: http
-    static_configs:
-    - targets: 
-      - 'alertmanager:9093'
-
 #  - job_name: 'nginx'
 #    scrape_interval: 10s
 #    static_configs:
