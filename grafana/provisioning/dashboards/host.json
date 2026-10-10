@@ -1061,13 +1061,211 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "avg(\n  node_hwmon_temp_celsius{instance=\"nodeexporter:9100\", chip=~\"platform_coretemp_.*\"}\n)\n",
-          "legendFormat": "Package Temperature",
+          "expr": "node_hwmon_temp_celsius{instance=\"nodeexporter:9100\", chip=~\"platform_coretemp_.*\", sensor=\"temp1\"}\n",
+          "legendFormat": "Package",
           "range": true,
           "refId": "A"
         }
       ],
       "title": "CPU Package Temperature",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "Performance cores, averaged over 1 minute. These boost highest and usually run hottest.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 0,
+        "y": 26
+      },
+      "id": 26,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "avg_over_time(node_hwmon_temp_celsius{instance=\"nodeexporter:9100\", chip=~\"platform_coretemp_.*\", sensor=~\"temp(2|6|10|14|18|22|26|30)\"}[1m]) * on(chip, sensor) group_left(label) node_hwmon_sensor_label",
+          "legendFormat": "{{label}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "P-core Temperatures",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "Efficiency cores, averaged over 1 minute.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 12,
+        "y": 26
+      },
+      "id": 27,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "12.0.2",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "avg_over_time(node_hwmon_temp_celsius{instance=\"nodeexporter:9100\", chip=~\"platform_coretemp_.*\", sensor=~\"temp(3[4-9]|4[0-9])\"}[1m]) * on(chip, sensor) group_left(label) node_hwmon_sensor_label",
+          "legendFormat": "{{label}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "E-core Temperatures",
       "type": "timeseries"
     },
     {
@@ -1134,7 +1332,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 38
       },
       "id": 25,
       "options": {
@@ -1179,7 +1377,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 35
+        "y": 47
       },
       "id": 21,
       "panels": [],
@@ -1254,7 +1452,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 48
       },
       "id": 18,
       "options": {
@@ -1364,7 +1562,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 45
+        "y": 57
       },
       "id": 20,
       "options": {
@@ -1473,7 +1671,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 54
+        "y": 66
       },
       "id": 19,
       "options": {
@@ -1582,7 +1780,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 63
+        "y": 75
       },
       "id": 17,
       "options": {
@@ -1630,7 +1828,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 72
+        "y": 84
       },
       "id": 23,
       "panels": [],
@@ -1762,7 +1960,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 73
+        "y": 85
       },
       "id": 6,
       "options": {
@@ -1896,7 +2094,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 82
+        "y": 94
       },
       "id": 14,
       "options": {
@@ -2013,7 +2211,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 89
+        "y": 101
       },
       "id": 15,
       "options": {
@@ -2069,7 +2267,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 96
+        "y": 108
       },
       "id": 24,
       "panels": [],
@@ -2141,7 +2339,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 97
+        "y": 109
       },
       "id": 8,
       "options": {
@@ -2273,7 +2471,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 104
+        "y": 116
       },
       "id": 7,
       "options": {
