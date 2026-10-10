@@ -9,7 +9,7 @@ volumes:
 services:
 
   prometheus:
-    image: prom/prometheus:v3.4.2
+    image: prom/prometheus:v3.15.0
     container_name: prometheus
     volumes:
       - ./prometheus:/etc/prometheus
@@ -29,24 +29,9 @@ services:
     labels:
       org.label-schema.group: "monitoring"
 
-  alertmanager:
-    image: prom/alertmanager:v0.28.1
-    container_name: alertmanager
-    volumes:
-      - ./alertmanager:/etc/alertmanager
-    command:
-      - '--config.file=/etc/alertmanager/config.yml'
-      - '--storage.path=/alertmanager'
-    restart: unless-stopped
-    expose:
-      - 9093
-    networks:
-      - monitor-net
-    labels:
-      org.label-schema.group: "monitoring"
 
   nodeexporter:
-    image: prom/node-exporter:latest
+    image: prom/node-exporter:v1.12.1
     container_name: nodeexporter
     volumes:
       - /proc:/host/proc:ro
@@ -66,7 +51,7 @@ services:
       org.label-schema.group: "monitoring"
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.52.1
+    image: ghcr.io/google/cadvisor:v0.60.6
     container_name: cadvisor
     privileged: true
     devices:
@@ -86,15 +71,16 @@ services:
       org.label-schema.group: "monitoring"
 
   grafana:
-    image: grafana/grafana:12.0.2
+    image: grafana/grafana:13.2.3
     container_name: grafana
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
     environment:
-      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
-      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
       - GF_USERS_ALLOW_SIGN_UP=false
       - GF_USERS_DEFAULT_THEME=tron
     restart: unless-stopped
@@ -106,7 +92,7 @@ services:
       org.label-schema.group: "monitoring"
 
   pushgateway:
-    image: prom/pushgateway:v1.11.0
+    image: prom/pushgateway:v1.11.4
     container_name: pushgateway
     restart: unless-stopped
     expose:
@@ -117,20 +103,15 @@ services:
       org.label-schema.group: "monitoring"
 
   caddy:
-    image: caddy:2.10.0
+    image: caddy:2.11.7
     container_name: caddy
     ports:
-      - "3000:3000"
-      - "8080:8080"
-      - "9090:9090"
-      - "9093:9093"
-      - "9091:9091"
+      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:9090:9090"
+      - "127.0.0.1:9091:9091"
     volumes:
       - ./caddy:/etc/caddy
-    environment:
-      - ADMIN_USER=${ADMIN_USER:-admin}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
-      - ADMIN_PASSWORD_HASH=${ADMIN_PASSWORD_HASH:-$2a$14$1l.IozJx7xQRVmlkEQ32OeEEfP5mRxTpbDTCTcXRqn19gXD8YK1pO}
     restart: unless-stopped
     networks:
       - monitor-net
@@ -138,7 +119,7 @@ services:
       org.label-schema.group: "monitoring"
 
   dcgm-exporter:
-    image: nvcr.io/nvidia/k8s/dcgm-exporter:latest
+    image: nvcr.io/nvidia/k8s/dcgm-exporter:4.6.1-4.8.4
     container_name: dcgm-exporter
     runtime: nvidia
     environment:
@@ -147,6 +128,6 @@ services:
     networks:
       - monitor-net
     ports:
-      - "9400:9400"   # metrics endpoint
+      - "127.0.0.1:9400:9400"   # metrics endpoint
     labels:
       org.label-schema.group: "monitoring"

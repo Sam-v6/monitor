@@ -11,10 +11,10 @@ Make sure you have the following:
 
 From the repo root, run the following:
 ```bash
-ADMIN_USER='admin' ADMIN_PASSWORD='admin' ADMIN_PASSWORD_HASH='$2a$14$1l.IozJx7xQRVmlkEQ32OeEEfP5mRxTpbDTCTcXRqn19gXD8YK1pO' docker compose up -d
+docker compose up -d
 ```
 
-Navigate to `http://<host-ip>:3000` (or `localhost:3000`) and login with user ***admin*** password ***admin***. You can change the credentials in the compose file or by supplying the `ADMIN_USER` and `ADMIN_PASSWORD` environment variables on compose up.
+Navigate to `http://localhost:3000`. There is no login: the stack is meant for a single local machine, so Grafana runs with anonymous admin access and all ports are bound to `127.0.0.1` only.
 
 Via your browser, select `Dashboards` and now view the various metric dashboards!
 
@@ -22,13 +22,12 @@ Via your browser, select `Dashboards` and now view the various metric dashboards
 ## About
 
 This monitoring stack will launch the following containers, note `DCGM exporter` which is the novel addition of GPU metric gathering:
-* Prometheus (metrics database) `http://<host-ip>:9090`
-* Prometheus-Pushgateway (push acceptor for ephemeral and batch jobs) `http://<host-ip>:9091`
-* AlertManager (alerts management) `http://<host-ip>:9093`
-* Grafana (visualize metrics) `http://<host-ip>:3000`
+* Prometheus (metrics database) `http://localhost:9090`
+* Prometheus-Pushgateway (push acceptor for ephemeral and batch jobs) `http://localhost:9091`
+* Grafana (visualize metrics) `http://localhost:3000`
 * NodeExporter (host metrics collector)
 * cAdvisor (containers metrics collector)
-* Caddy (reverse proxy and basic auth provider for prometheus and alertmanager)
+* Caddy (reverse proxy)
 * DCGM exporter (grabs nvidia GPU metrics and feeds it to prometheus)
 
 

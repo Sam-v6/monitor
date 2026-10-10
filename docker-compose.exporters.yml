@@ -1,7 +1,7 @@
 services:
 
   nodeexporter:
-    image: prom/node-exporter:v1.9.1
+    image: prom/node-exporter:v1.12.1
     container_name: nodeexporter
     volumes:
       - /proc:/host/proc:ro
@@ -18,7 +18,7 @@ services:
       org.label-schema.group: "monitoring"
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.52.1
+    image: ghcr.io/google/cadvisor:v0.60.6
     container_name: cadvisor
     privileged: true
     devices:
