@@ -33,6 +33,7 @@ services:
   nodeexporter:
     image: prom/node-exporter:v1.12.1
     container_name: nodeexporter
+    user: root  # RAPL energy counters (CPU power) are root-only
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
