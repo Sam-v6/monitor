@@ -10,6 +10,8 @@ global:
 # Load and evaluate rules in this file every 'evaluation_interval' seconds.
 rule_files:
   - "alert.rules"
+  # Generated from workflow-orchestration/deploy/monitoring.
+  - "local/*.rules.yml"
 
 # A scrape configuration containing exactly one endpoint to scrape.
 scrape_configs:

@@ -2,3 +2,6 @@
 .vs/
 .vscode/
 .idea/
+
+# Locally installed rules; source lives in workflow-orchestration.
+/prometheus/local/
