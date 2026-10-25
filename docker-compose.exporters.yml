@@ -8,6 +8,7 @@ services:
       - /sys:/host/sys:ro
       - /:/rootfs:ro
     command:
+      - '--web.listen-address=127.0.0.1:9100'
       - '--path.procfs=/host/proc'
       - '--path.rootfs=/rootfs'
       - '--path.sysfs=/host/sys'
@@ -20,6 +21,8 @@ services:
   cadvisor:
     image: ghcr.io/google/cadvisor:v0.60.6
     container_name: cadvisor
+    command:
+      - '--listen_ip=127.0.0.1'
     privileged: true
     devices:
       - /dev/kmsg:/dev/kmsg

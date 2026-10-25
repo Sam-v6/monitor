@@ -14,7 +14,7 @@ From the repo root, run the following:
 docker compose up -d
 ```
 
-Navigate to `http://localhost:3000`. There is no login: the stack is meant for a single local machine, so Grafana runs with anonymous admin access and all ports are bound to `127.0.0.1` only.
+Navigate to `http://localhost:3000`. There is no login: the stack is meant for a single local machine, so Grafana runs with anonymous read-only access and all ports are bound to `127.0.0.1` only. The optional host-network exporters also listen only on loopback; scrape them from the same host network or through a local tunnel.
 
 Via your browser, select `Dashboards` and now view the various metric dashboards!
 
